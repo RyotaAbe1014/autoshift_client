@@ -5,5 +5,7 @@
     <router-link to="/about">About</router-link>
     <br>
     <router-link to="/">Home</router-link>
+
+    <v-btn>Vuetify!!</v-btn>
   </div>
 </template>
