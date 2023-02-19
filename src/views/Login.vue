@@ -4,10 +4,9 @@
 
 <template>
   <v-app>
-    <v-main>
+    <v-main class="main">
       <v-container>
-        
-        <v-row class="mx-auto">
+        <v-row class="pt-16">
           <v-col cols="3"></v-col>
           <v-col cols="6">
             <v-card>
@@ -29,3 +28,9 @@
     </v-main>
   </v-app>
 </template>
+
+<style scoped>
+.main {
+  background-color: #f5f5f5;
+}
+</style>
