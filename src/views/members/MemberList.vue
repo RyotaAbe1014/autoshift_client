@@ -178,7 +178,7 @@ const users = [
           <v-col cols="4">
           </v-col>
           <v-col cols="4">
-            <v-btn color="primary" class="float-right">
+            <v-btn color="primary" class="float-right" to="/members/create">
               メンバーを追加
             </v-btn>
           </v-col>

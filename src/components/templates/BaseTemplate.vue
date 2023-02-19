@@ -13,7 +13,7 @@ const drawer = ref(true)
           <v-list-item v-bind="props" prepend-icon="mdi-account-circle" title="メンバー管理"></v-list-item>
         </template>
         <v-list-item prepend-icon="" title="メンバー一覧" value="メンバー一覧" to="/members"></v-list-item>
-        <v-list-item prepend-icon="" title="メンバー追加" value="メンバー追加"></v-list-item>
+        <v-list-item prepend-icon="" title="メンバー追加" value="メンバー追加" to="/members/create"></v-list-item>
       </v-list-group>
       <v-list-group>
         <template v-slot:activator="{ props }">
