@@ -3,10 +3,17 @@ import BaseTemplate from '../components/templates/BaseTemplate.vue';
 </script>
 
 <template>
-  <div>
+  <v-app>
     <BaseTemplate />
-    <div class="home">
-      <h1>This is a home page</h1>
-    </div>
-  </div>
+    <v-main class="main">
+      <v-container>
+        <h2>Home</h2>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
+<style scoped>
+.main {
+  background-color: #FAFAFA;
+}
+</style>
