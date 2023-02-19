@@ -1,5 +1,23 @@
 <script setup lang="ts">
+import { ref, Ref } from 'vue'
+import axios from 'axios'
 
+const name: Ref<string> = ref('')
+const password: Ref<string> = ref('')
+
+const login = async () => {
+  // ログイン処理
+  const res = await axios.post('http://localhost:8000/token', {
+    name: name.value,
+    password: password.value
+  })
+  .then((res) => {
+      // セッションストレージにトークンを保存
+      sessionStorage.setItem('token', res.data.access_token)
+    }).catch((err) => {
+      console.log(err)
+    })
+}
 </script>
 
 <template>
@@ -13,12 +31,12 @@
               <v-card-title class="text-center">Login</v-card-title>
               <v-card-text>
                 <v-form>
-                  <v-text-field label="組織名"></v-text-field>
-                  <v-text-field label="Password"></v-text-field>
+                  <v-text-field label="組織名" v-model="name"></v-text-field>
+                  <v-text-field label="Password" v-model="password"></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn color="teal-accent-4" class="mx-auto">Login</v-btn>
+                <v-btn color="teal-accent-4" class="mx-auto" @Click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
