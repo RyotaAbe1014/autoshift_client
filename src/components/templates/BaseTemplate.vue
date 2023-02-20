@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, Ref, onMounted } from 'vue'
-const drawer = ref(true)
 
+
+const drawer: Ref<boolean> = ref(true)
 const oraganizationName: Ref<string | undefined> = ref(undefined)
-
 
 onMounted(() => {
   if (sessionStorage.getItem('oraganizationName') === undefined) {

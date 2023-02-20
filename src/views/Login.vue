@@ -5,7 +5,7 @@ import axios from 'axios'
 const name: Ref<string> = ref('')
 const password: Ref<string> = ref('')
 
-const login = async () => {
+const login = async (): Promise<void> => {
   // ログイン処理
   await axios.post('http://localhost:8000/token', {
     name: name.value,
