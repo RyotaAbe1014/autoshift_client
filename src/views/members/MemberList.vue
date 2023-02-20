@@ -1,168 +1,34 @@
 <script setup lang="ts">
 import BaseTemplate from '../../components/templates/BaseTemplate.vue';
+import { ref, Ref, onMounted } from 'vue';
+import axios from 'axios';
 
-const users = [
-  {
-    id: 1,
-    name: 'test',
-    email: 'test@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test2@test.com',
-  },
-]
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  phone_number: string;
+}
+
+const users: Ref<User[]> = ref([]);
+
+const getUsers = () => {
+  const token = sessionStorage.getItem('token');
+  axios.get('http://localhost:8000/users/', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }).then((res) => {
+    users.value = res.data
+  }).catch((err) => {
+    console.log(err)
+  }
+  )
+}
+
+onMounted(() => {
+  getUsers()
+})
 
 </script>
 
@@ -197,6 +63,9 @@ const users = [
                   メールアドレス
                 </th>
                 <th class="text-left">
+                  電話番号
+                </th>
+                <th class="text-left">
                   アクション
                 </th>
               </tr>
@@ -206,6 +75,7 @@ const users = [
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
+                <td>{{ user.phone_number }}</td>
                 <td>
                   <v-btn color="teal-lighten-1">
                     編集

@@ -20,7 +20,8 @@ const addMember = () => {
       'Authorization': `Bearer ${token}`
     }
   }).then((res) => {
-    console.log(res)
+    // メンバ一覧画面に遷移
+    window.location.href = '/members/'
   }).catch((err) => {
     console.log(err)
   }
