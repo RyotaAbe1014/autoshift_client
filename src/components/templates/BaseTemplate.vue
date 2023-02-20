@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref, onMounted } from 'vue'
 const drawer = ref(true)
+
+const oraganizationName: Ref<string | undefined> = ref(undefined)
+
+
+onMounted(() => {
+  if (sessionStorage.getItem('oraganizationName') === undefined) {
+    window.location.href = '/login'
+  }
+  console.log(sessionStorage.getItem('oraganizationName'))
+  oraganizationName.value = sessionStorage.getItem('oraganizationName') as string
+})
+
 
 </script>
 
 <template>
   <v-navigation-drawer v-model="drawer">
     <v-list dense>
-      <v-list-item prepend-icon="mdi-account" title="株式会社00" value="株式会社00"></v-list-item>
+      <v-list-item prepend-icon="mdi-account" :title="oraganizationName" :value="oraganizationName"></v-list-item>
       <v-list-group>
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" prepend-icon="mdi-account-circle" title="メンバー管理"></v-list-item>

@@ -15,6 +15,9 @@ const login = async () => {
       // セッションストレージにトークンを保存
       console.log(res)
       sessionStorage.setItem('token', res.data.access_token)
+      sessionStorage.setItem('oraganizationName', res.data.organization_name)
+      // '/'にリダイレクト
+      window.location.href = '/'
     }).catch((err) => {
       console.log(err)
     })
