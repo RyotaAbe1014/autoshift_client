@@ -7,12 +7,13 @@ const password: Ref<string> = ref('')
 
 const login = async () => {
   // ログイン処理
-  const res = await axios.post('http://localhost:8000/token', {
+  await axios.post('http://localhost:8000/token', {
     name: name.value,
     password: password.value
   })
   .then((res) => {
       // セッションストレージにトークンを保存
+      console.log(res)
       sessionStorage.setItem('token', res.data.access_token)
     }).catch((err) => {
       console.log(err)
