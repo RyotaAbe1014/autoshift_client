@@ -13,7 +13,11 @@ onMounted(() => {
   oraganizationName.value = sessionStorage.getItem('oraganizationName') as string
 })
 
-
+const logout = async (): Promise<void> => {
+  sessionStorage.removeItem('token')
+  sessionStorage.removeItem('oraganizationName')
+  window.location.href = '/login'
+}
 </script>
 
 <template>
@@ -35,7 +39,7 @@ onMounted(() => {
             <v-list-item prepend-icon="" title="メンバー追加" value="メンバー追加"></v-list-item> -->
       </v-list-group>
       <v-list-item prepend-icon="mdi-cog" title="設定" value="設定"></v-list-item>
-      <v-list-item prepend-icon="mdi-logout" title="ログアウト" value="ログアウト"></v-list-item>
+      <v-list-item prepend-icon="mdi-logout" title="ログアウト" value="ログアウト" @click="logout"></v-list-item>
     </v-list>
   </v-navigation-drawer>
 
