@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseTemplate from '../../components/templates/BaseTemplate.vue';
+import DeleteMemberModal from '../../components/modals/members/DeleteMemberModalCard.vue';
 import { ref, Ref, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -11,6 +12,7 @@ interface User {
 }
 
 const users: Ref<User[]> = ref([]);
+const dialog: Ref<boolean> = ref(false);
 
 const getUsers = () => {
   const token = sessionStorage.getItem('token');
@@ -20,6 +22,25 @@ const getUsers = () => {
     }
   }).then((res) => {
     users.value = res.data
+  }).catch((err) => {
+    console.log(err)
+  }
+  )
+}
+
+const deleteUser = (id: number) => {
+  const token = sessionStorage.getItem('token');
+  axios.delete(`http://localhost:8000/users/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }).then((res) => {
+    console.log(res)
+    // fillterで削除したユーザーを除外する
+    users.value = users.value.filter((user) => user.id !== id)
+    // ダイアログを閉じる
+    dialog.value = false
+
   }).catch((err) => {
     console.log(err)
   }
@@ -80,16 +101,31 @@ onMounted(() => {
                   <v-btn color="teal-lighten-1">
                     編集
                   </v-btn>
-                  <v-btn color="error ml-3">
+                  <v-btn color="error ml-3" @click="dialog = true">
                     削除
                   </v-btn>
                 </td>
+                <v-dialog v-model="dialog" width="auto">
+                  <v-card class="pt-3">
+                    <v-card-title class="text-center">
+                      <h3>削除しても良いですか？</h3>
+                    </v-card-title>
+                    <v-card-text>
+                      <p>削除したデータは復元できません。</p>
+                    </v-card-text>
+                    <v-card-actions class="justify-center">
+                      <v-btn color="error" @click="deleteUser(user.id)">削除</v-btn>
+                      <v-btn color="primary" @click="dialog = false">キャンセル</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </tr>
             </tbody>
           </v-table>
         </v-container>
       </v-container>
     </v-main>
+
   </v-app>
 </template>
 <style scoped>
