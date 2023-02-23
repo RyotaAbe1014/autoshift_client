@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BaseTemplate from '../../components/templates/BaseTemplate.vue';
-import DeleteMemberModal from '../../components/modals/members/DeleteMemberModalCard.vue';
 import { ref, Ref, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -98,7 +97,7 @@ onMounted(() => {
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone_number }}</td>
                 <td>
-                  <v-btn color="teal-lighten-1">
+                  <v-btn color="teal-lighten-1" :to="`/members/${user.id}/edit`">
                     編集
                   </v-btn>
                   <v-btn color="error ml-3" @click="dialog = true">
