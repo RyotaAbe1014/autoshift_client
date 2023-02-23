@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import BaseTemplate from '../../components/templates/BaseTemplate.vue';
 import { ref, Ref } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const name: Ref<string> = ref('');
 const email: Ref<string> = ref('');
 const phone_number: Ref<string> = ref('');
+const router = useRouter();
 
 
 const addMember = () => {
@@ -21,7 +23,7 @@ const addMember = () => {
     }
   }).then((res) => {
     // メンバ一覧画面に遷移
-    window.location.href = '/members/'
+    router.push('/members')
   }).catch((err) => {
     console.log(err)
   }

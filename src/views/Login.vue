@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
 import axios from 'axios'
-
+import { useRouter } from 'vue-router'
 const name: Ref<string> = ref('')
 const password: Ref<string> = ref('')
+const router = useRouter()
+
 
 const login = async (): Promise<void> => {
   // ログイン処理
@@ -17,7 +19,7 @@ const login = async (): Promise<void> => {
       sessionStorage.setItem('token', res.data.access_token)
       sessionStorage.setItem('oraganizationName', res.data.organization_name)
       // '/'にリダイレクト
-      window.location.href = '/'
+      router.push('/')
     }).catch((err) => {
       console.log(err)
     })
