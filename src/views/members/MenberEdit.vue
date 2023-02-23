@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseTemplate from '../../components/templates/BaseTemplate.vue';
 import { ref, Ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios';
 
 const name: Ref<string> = ref('');
@@ -10,11 +10,11 @@ const phoneNumber: Ref<string> = ref('');
 
 
 const route = useRoute()
+const router = useRouter()
 const userId = route.params.id
+const token = sessionStorage.getItem('token')
 
 const getUser = async () => {
-  const token = sessionStorage.getItem('token')
-
   await axios.get(`http://localhost:8000/users/${userId}`
     , {
       headers: {
@@ -31,9 +31,30 @@ const getUser = async () => {
     })
 }
 
-onMounted(() => {
-  getUser()
-})
+// update user
+const UpdateUser = async () => {
+  const data = {
+    name: name.value,
+    email: email.value,
+    phone_number: phoneNumber.value
+  }
+  await axios.put(`http://localhost:8000/users/${userId}`, data
+    , {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }
+    ).then((res) => {
+      console.log(res)
+      router.push('/members')
+    }).catch((err) => {
+      console.log(err)
+    })
+}
+
+  onMounted(() => {
+    getUser()
+  })
 
 </script>
 
@@ -65,7 +86,7 @@ onMounted(() => {
           </v-row>
           <v-row>
             <v-col cols="6">
-              <v-btn color="primary" class="float-right" @click="">
+              <v-btn color="primary" class="float-right" @click="UpdateUser">
                 保存
               </v-btn>
             </v-col>
