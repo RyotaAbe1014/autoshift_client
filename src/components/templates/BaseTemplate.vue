@@ -35,8 +35,8 @@ const logout = async (): Promise<void> => {
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" prepend-icon="mdi-calendar-month" title="シフト管理"></v-list-item>
         </template>
-        <!-- <v-list-item prepend-icon="" title="メンバー一覧" value="メンバー一覧"></v-list-item>
-            <v-list-item prepend-icon="" title="メンバー追加" value="メンバー追加"></v-list-item> -->
+        <v-list-item prepend-icon="" title="メンバー別シフト提出" value="メンバー別シフト提出" to="/shifts/create"></v-list-item>
+        <!-- <v-list-item prepend-icon="" title="メンバー追加" value="メンバー追加"></v-list-item> -->
       </v-list-group>
       <v-list-item prepend-icon="mdi-cog" title="設定" value="設定"></v-list-item>
       <v-list-item prepend-icon="mdi-logout" title="ログアウト" value="ログアウト" @click="logout"></v-list-item>
