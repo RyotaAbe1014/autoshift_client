@@ -13,7 +13,8 @@ interface User {
 
 interface Shift {
   id?: number;
-  start_time: string;
+  date: string;
+  start_time?: string;
   end_time?: string;
   user_id: number;
 }
@@ -51,6 +52,21 @@ const onClickGetUserShift = async () => {
   )
 }
 
+
+const onClickSaveShift = async () => {
+  console.log(shifts.value)
+  const res = await axios.post(`http://localhost:8000/shifts/`, shifts.value, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }).then((res) => {
+    
+  }).catch((err) => {
+    console.log(err)
+  }
+  )
+}
+
 onMounted(() => {
   getUsers()
 })
@@ -80,7 +96,7 @@ onMounted(() => {
               </v-btn>
             </v-col>
           </v-row>
-          <v-table height="500">
+          <v-table height="450">
             <thead>
               <tr>
                 <th class="text-left">日付</th>
@@ -90,15 +106,21 @@ onMounted(() => {
             </thead>
             <tbody>
               <tr v-for="shift in shifts" :key="shift.id">
-                <td>{{ shift.start_time.split('T')[0] }}</td>
-                <td>{{ shift.start_time.split('T')[1] }}</td>
-                <td>{{ shift.end_time?.split('T')[1] }}</td>
+                <td>{{ shift.date }}</td>
+                <td><v-text-field v-model="shift.start_time" type="time" outlined></v-text-field></td>
+                <td><v-text-field v-model="shift.end_time" type="time" outlined></v-text-field></td>
               </tr>
             </tbody>
           </v-table>
-          <v-btn color="primary">
-            保存
-          </v-btn>
+          <v-row>
+            <v-col cols="10">
+            </v-col>
+            <v-col cols="2">
+              <v-btn color="primary" class="mt-5" @click="onClickSaveShift">
+                保存
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-container>
       </v-container>
     </v-main>
