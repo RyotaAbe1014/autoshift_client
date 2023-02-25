@@ -4,6 +4,7 @@ import MemberList from '../views/members/MemberList.vue';
 import MemberCreate from '../views/members/MemberCreate.vue';
 import MenberEdit from '../views/members/MenberEdit.vue';
 import ShiftCreate from '../views/shift/ShiftCreate.vue';
+import ShiftAll from '../views/shift/ShiftAll.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/shifts/create',
     name: 'ShiftCreate',
     component: ShiftCreate,
+  },
+  {
+    path: '/shifts/all',
+    name: 'ShiftAll',
+    component: ShiftAll,
   },
   
 ];
