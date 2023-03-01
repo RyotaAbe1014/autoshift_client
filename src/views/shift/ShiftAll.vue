@@ -106,6 +106,15 @@ onMounted(() => {
               <tr v-for="user in users" :key="user.id">
                 <td>{{ user.name }}</td>
                 <td v-for="hour in hours" :key="hour" class="text-center">
+                  <!-- ロジック　someメソッドで配列の中に条件を満たすものがあるかを判定する -->
+                  <!-- ある場合はtrueを返す -->
+                  <!-- 今回は、getShifts(user.id)でuser.idに紐づくシフトを取得し、 -->
+                  <!-- その中にgetHours(shift.start_time, shift.end_time).includes(hour)で -->
+                  <!-- 時間が含まれているかを判定している -->
+                  <!-- ある場合はtrueを返す -->
+                  <!-- その結果をv-ifで判定している -->
+                  <!-- ある場合はチェックマークを表示する -->
+                  <!-- ない場合は何も表示しない -->
                   <div
                     v-if="getShifts(user.id).some((shift) => getHours(shift.start_time, shift.end_time).includes(hour))">
                     <v-icon color="primary">mdi-check</v-icon>
