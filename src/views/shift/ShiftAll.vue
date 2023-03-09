@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseTemplate from '../../components/templates/BaseTemplate.vue';
-import { ref, Ref, onMounted } from 'vue';
+import { ref, Ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 interface User {
@@ -22,9 +22,10 @@ const users: Ref<User[]> = ref([]);
 const searchUserId: Ref<number | undefined> = ref(undefined);
 const token = sessionStorage.getItem('token');
 const shifts: Ref<shift[]> = ref([]);
-
-
 const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+const searchStartTime: Ref<string | undefined> = ref(undefined);
+const searchEndTime: Ref<string | undefined> = ref(undefined);
+
 
 const userShifts = [
   { start_time: "09:00:00", end_time: "17:00:00", user_id: 1 },
@@ -55,8 +56,22 @@ const getHours = (start: string, end: string) => {
   return hours.slice(startHour - 1, endHour)
 }
 
+const getShiftsByUserId = (userId: number) => {
+  const shift = userShifts.filter((shift) => shift.user_id === userId)
+  searchStartTime.value = shift[0].start_time
+  searchEndTime.value = shift[0].end_time
+  return false
+}
+
 onMounted(() => {
   getUsers()
+})
+
+watch(searchUserId, (userId) => {
+  if (userId) {
+    console.log(userId)
+    getShiftsByUserId(userId)
+  }
 })
 </script>
 <template>
@@ -81,10 +96,10 @@ onMounted(() => {
                 </v-select>
               </v-col>
               <v-col cols="3">
-                <v-text-field type="time" outlined></v-text-field>
+                <v-text-field type="time" outlined v-model="searchStartTime"></v-text-field>
               </v-col>
               <v-col cols="3">
-                <v-text-field type="time" outlined></v-text-field>
+                <v-text-field type="time" outlined v-model="searchEndTime"></v-text-field>
               </v-col>
               <v-col cols="2">
                 <v-btn>保存</v-btn>
@@ -107,14 +122,6 @@ onMounted(() => {
                 <td>{{ user.name }}</td>
                 <td v-for="hour in hours" :key="hour" class="text-center">
                   <!-- ロジック　someメソッドで配列の中に条件を満たすものがあるかを判定する -->
-                  <!-- ある場合はtrueを返す -->
-                  <!-- 今回は、getShifts(user.id)でuser.idに紐づくシフトを取得し、 -->
-                  <!-- その中にgetHours(shift.start_time, shift.end_time).includes(hour)で -->
-                  <!-- 時間が含まれているかを判定している -->
-                  <!-- ある場合はtrueを返す -->
-                  <!-- その結果をv-ifで判定している -->
-                  <!-- ある場合はチェックマークを表示する -->
-                  <!-- ない場合は何も表示しない -->
                   <div
                     v-if="getShifts(user.id).some((shift) => getHours(shift.start_time, shift.end_time).includes(hour))">
                     <v-icon color="primary">mdi-check</v-icon>

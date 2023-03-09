@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, Ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
-
+const router = useRouter()
 const drawer: Ref<boolean> = ref(true)
 const oraganizationName: Ref<string | undefined> = ref(undefined)
 
@@ -16,7 +17,7 @@ onMounted(() => {
 const logout = async (): Promise<void> => {
   sessionStorage.removeItem('token')
   sessionStorage.removeItem('oraganizationName')
-  window.location.href = '/login'
+  router.push('/login')
 }
 </script>
 
@@ -36,7 +37,7 @@ const logout = async (): Promise<void> => {
           <v-list-item v-bind="props" prepend-icon="mdi-calendar-month" title="シフト管理"></v-list-item>
         </template>
         <v-list-item prepend-icon="" title="メンバー別シフト提出" value="メンバー別シフト提出" to="/shifts/create"></v-list-item>
-        <!-- <v-list-item prepend-icon="" title="メンバー追加" value="メンバー追加"></v-list-item> -->
+        <v-list-item prepend-icon="" title="シフト確認" value="シフト確認" to="/shifts"></v-list-item>
       </v-list-group>
       <v-list-item prepend-icon="mdi-cog" title="設定" value="設定"></v-list-item>
       <v-list-item prepend-icon="mdi-logout" title="ログアウト" value="ログアウト" @click="logout"></v-list-item>

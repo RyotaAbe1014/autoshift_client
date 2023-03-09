@@ -39,7 +39,7 @@ const routes: Array<RouteRecordRaw> = [
     component: ShiftCreate,
   },
   {
-    path: '/shifts/all',
+    path: '/shifts/',
     name: 'ShiftAll',
     component: ShiftAll,
   },
